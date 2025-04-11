@@ -1,0 +1,125 @@
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+    html, body, .main, .stApp, .css-18ni7ap, .css-1d391kg, .css-1cpxqw2 {
+        font-family: 'Press Start 2P', cursive !important;
+    }
+
+    h1, h2, h3, h4, h5, h6, p, div, span, label, input, textarea, button, select {
+        font-family: 'Press Start 2P', cursive !important;
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+    }
+
+    .stTextInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"], 
+    .stDownloadButton > button, .stButton > button, .stFileUploader {
+        font-family: 'Press Start 2P', cursive !important;
+        font-size: 13px !important;
+    }
+
+    .stTextInput, .stTextArea, .stSelectbox, .stButton, .stRadio, .stFileUploader {
+        margin-bottom: 13px !important;
+    }
+
+    .stMarkdown, .stRadio label, .stSelectbox label, .stTextArea label, .stTextInput label {
+        font-size: 13px !important;
+        font-weight: normal !important;
+    }
+
+    body, .main {
+        background-image: url('https://images.unsplash.com/photo-1602526432604-e8b63f13c64e');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+    }
+
+    .stButton > button, .stDownloadButton > button {
+        all: unset;
+        display: block;
+        background-color: transparent;
+        border-radius: 999px;
+        padding: 0.6rem 1.5rem;
+        margin: 1rem auto;
+        font-size: 13px;
+        font-weight: 600;
+        color: #000;
+        border: 2px solid #ccc;
+        text-align: center;
+        transition: all 0.3s ease;
+        animation: slideFromBottom 1.4s ease forwards;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .stButton > button:hover {
+        background-color: #f0f0f0;
+        color: #000;
+    }
+
+    .stDownloadButton:nth-of-type(1) > button {
+        background-color: #007bff !important;
+        color: white !important;
+        border: none !important;
+    }
+
+    .stDownloadButton:nth-of-type(1) > button:hover {
+        background-color: #0056b3 !important;
+    }
+
+    @keyframes slideFromBottom {
+        from { transform: translateY(100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideFromLeft {
+        from { transform: translateX(-100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideFromRight {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+
+    h1:nth-of-type(1) { animation: slideFromLeft 1s ease forwards; }
+    .stTextArea, .stTextInput, .stSelectbox { animation: slideFromRight 1.2s ease forwards; opacity: 0; }
+    .stRadio label { animation: slideFromLeft 1.3s ease forwards; }
+
+    .custom-next-button {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+        animation: slideFromBottom 1.5s ease forwards;
+    }
+
+    .custom-next-button a {
+        background-color: #2CA89A;
+        color: white;
+        padding: 0.75rem 1.8rem;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+        font-family: 'Press Start 2P', cursive !important;
+    }
+
+    .custom-next-button a:hover {
+        background-color: #238b7f;
+
+    }
+
+    .block-container {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            max-width: none;
+        }
+        .stSlider, .stCheckbox {
+            width: 100% !important;
+        }
+</style>
