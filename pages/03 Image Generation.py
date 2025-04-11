@@ -63,48 +63,55 @@ if "topic" not in st.session_state or not st.session_state["topic"].strip():
     st.stop()
 else:
     duration = st.session_state.get("duration", 60)
-    num_images = round(duration / 7)
+    num_images = round(duration / 5)
     subt = st.session_state.get("subt")
 
 
 # --- Prompt input ---
 user_ip = st.text_input("Search Prompt:", st.session_state["topic"]) # change to topic if needed
 
-# --- Trigger Image Search ---
-if st.button("🔎 Search Images"):
-    with st.spinner("Searching Images..."):
-        all_image_urls = []
+all_image_urls = []
+num_images = max(1, round(duration / 5))  # Minimum of 1 image
+urls = search_google_images(user_ip)[:num_images]
+all_image_urls.extend(urls)
 
-        # Dynamically determine number of images
-        num_images = max(1, round(duration / 7))  # Minimum of 1 image
-        urls = search_google_images(user_ip)[:num_images]
-        all_image_urls.extend(urls)
+valid_urls = []
+cols = st.columns(2)
 
-        if all_image_urls:
-            st.success(f"✅ Retrieved {len(all_image_urls)} image(s)!")
+for i, url in enumerate(all_image_urls):
+    try:
+        response = requests.get(url, timeout=5)  # Set a timeout
+        img = Image.open(BytesIO(response.content))
 
-            cols = st.columns(2)
-            for i, url in enumerate(all_image_urls):
+        with cols[i % 2]:
+            st.image(img, caption=f"Image {i + 1}", use_container_width=True)
+            img_buffer = BytesIO()
+            img.save(img_buffer, format="PNG")
+            
+        valid_urls.append(url)
+
+    except Exception as e:
+  
+        # Retry by fetching a new image
+        retry_urls = search_google_images(user_ip)
+        for retry_url in retry_urls:
+            if retry_url not in all_image_urls:
                 try:
-                    response = requests.get(url)
-                    img = Image.open(BytesIO(response.content))
+                    retry_response = requests.get(retry_url, timeout=5)
+                    retry_img = Image.open(BytesIO(retry_response.content))
 
                     with cols[i % 2]:
-                        st.image(img, caption=f"Image {i + 1}", use_container_width=True)
-                        img_buffer = BytesIO()
-                        img.save(img_buffer, format="PNG")
-                        st.download_button(
-                            label="📥 Download",
-                            data=img_buffer.getvalue(),
-                            file_name=f"image_{i+1}.png",
-                            mime="image/png",
-                            key=f"download_{i}"
-                        )
-                except Exception as e:
-                    st.warning(f"⚠️ Could not load image {i + 1}: {e}")
+                        st.image(retry_img, caption=f"Retry Image {i + 1}", use_container_width=True)
+                        retry_buffer = BytesIO()
+                        retry_img.save(retry_buffer, format="PNG")
+                     
+                    valid_urls.append(retry_url)
+                    break
+                except:
+                    continue  # Skip if even retry fails
 
-            st.session_state["image_urls"] = all_image_urls
-
+# Store only the successfully loaded image URLs
+st.session_state["image_urls"] = valid_urls
 
 
 if st.button("➡️ Continue to Video Generation"):
