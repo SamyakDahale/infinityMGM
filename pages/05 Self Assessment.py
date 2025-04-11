@@ -26,7 +26,7 @@ script_content = st.session_state["script"]
 # Generate MCQs once per session
 if "mcqs" not in st.session_state:
     prompt = f"""
-    Generate 3 multiple-choice questions based on the following content:
+    Generate 10 multiple-choice questions based on the following content:
     ---
     {script_content}
     ---
